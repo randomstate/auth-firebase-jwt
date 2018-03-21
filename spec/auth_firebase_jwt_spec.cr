@@ -21,7 +21,9 @@ describe Auth::Strategies::Firebase::JWT do
 
   it "can validate and verify a token" do
     jwt_strategy = Strategies::Firebase::JWT.new "1234"
-    jwt_strategy.current_time = Time.new(2018, 3, 21, 11, 15)
+    jwt_strategy.clock = ->{
+      Time.new(2018, 3, 21, 11, 15)
+    }
     jwt = jwt_strategy.get_token(context)
 
     if jwt.nil?
@@ -38,7 +40,9 @@ describe Auth::Strategies::Firebase::JWT do
 
   it "can provide user details from a token" do
     jwt_strategy = Strategies::Firebase::JWT.new "taxfinder-af509"
-    jwt_strategy.current_time = Time.new(2018, 3, 21, 11, 15)
+    jwt_strategy.clock = ->{
+      Time.new(2018, 3, 21, 11, 15)
+    }
 
     user = jwt_strategy.attempt(context)
 
@@ -53,6 +57,9 @@ describe Auth::Strategies::Firebase::JWT do
 
   it "can convert firebase user to custom user" do
     jwt_strategy = Strategies::Firebase::JWT.new "taxfinder-af509"
+    jwt_strategy.clock = ->{
+      Time.new(2018, 3, 21, 11, 15)
+    }
 
     manager = Auth::Manager.new
     manager.use_sessions = false
@@ -76,5 +83,12 @@ describe Auth::Strategies::Firebase::JWT do
 
     user.class.should_not eq Strategies::Firebase::FirebaseUser
     user.email.should eq "connor@randomstate.co.uk"
+  end
+
+  it "can have custom time function" do
+    jwt_strategy = Strategies::Firebase::JWT.new "taxfinder-af509"
+    jwt_strategy.clock = ->{
+      Time.now
+    }
   end
 end

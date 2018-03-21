@@ -11,10 +11,9 @@ module Auth::Strategies::Firebase
   class JWT < Strategy(FirebaseUser)
     GOOGLE_PUBLIC_KEY_SOURCE_URL = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"
 
-    property current_time
+    property clock : Proc(Time) = ->{ Time.now }
 
     def initialize(@project_id : String)
-      @current_time = Time.now
     end
 
     def attempt(context : HTTP::Server::Context) : (FirebaseUser | Nil)
@@ -53,7 +52,7 @@ module Auth::Strategies::Firebase
     end
 
     def validate_token(token)
-      validator = ::JWT::Validator.new @current_time
+      validator = ::JWT::Validator.new @clock.call
       validator.issuer = "https://securetoken.google.com/#{@project_id}"
       validator.audience = @project_id
 
