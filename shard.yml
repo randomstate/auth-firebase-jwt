@@ -10,10 +10,12 @@ license: MIT
 
 dependencies:
 
-  auth:
-    github: randomstate/auth
-    branch: develop
-
   jwt:
     github: randomstate/jwt
     version: 0.1.2
+
+development_dependencies:
+
+  auth:
+    github: randomstate/auth
+    branch: develop
