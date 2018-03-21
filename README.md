@@ -42,12 +42,12 @@ end
 The following properties are available on the FirebaseUser object
 
 ```crystal
-      user_id: String,
-      auth_time: Time,
-      display_name: (String | Nil),
-      email: (String | Nil),
-      email_verified: (Bool | Nil),
-      phone_number: (String | Nil),
+  user_id: String,
+  auth_time: Time,
+  display_name: (String | Nil),
+  email: (String | Nil),
+  email_verified: (Bool | Nil),
+  phone_number: (String | Nil),
 ```
 
 ## Contributing
