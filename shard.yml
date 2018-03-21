@@ -7,3 +7,13 @@ authors:
 crystal: 0.24.1
 
 license: MIT
+
+dependencies:
+
+  auth:
+    github: randomstate/auth
+    branch: develop
+
+  jwt:
+    github: randomstate/jwt
+    version: 0.1.2
