@@ -68,6 +68,13 @@ describe Auth::Strategies::Firebase::JWT do
 
     user = manager.authenticate(:jwt, context)
 
+    user.should_not be_nil
+
+    if user.nil?
+      next
+    end
+
     user.class.should_not eq Strategies::Firebase::FirebaseUser
+    user.email.should eq "connor@randomstate.co.uk"
   end
 end
